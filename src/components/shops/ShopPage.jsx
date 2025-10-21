@@ -1,11 +1,9 @@
 import { useState } from "react";
 import PetList from "./PetList";
 import Pagination from "./Pagination";
-import useFetchPet from "../../components/";
-import FilterSection from "../../components/shops/FilterSection";
+import useFetchPet from "../../hooks/useFetchPets";
+import FilterSection from "./FilterSection";
 import useFetchCategories from "../../hooks/useFetchCategories";
-
-
 
 const ShopPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -34,8 +32,8 @@ const ShopPage = () => {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-8">Adopt Our Pets</h1>
+    <div className="max-w-7xl mx-auto px-4 py-8 bg-amber-500">
+      <h1 className="text-3xl font-bold mb-8 ">Shop Our Pets</h1>
       <FilterSection
         priceRange={priceRange}
         handlePriceChange={handlePriceChange}

@@ -1,5 +1,5 @@
 import { Link } from "react-router";
-import defaultImage from "../../assets/images/pets/img10.jpg";
+import defaultImage from "../../assets/images/pets/img9.jpg";
 
 const PetItem = ({ pet }) => {
   return (
@@ -10,7 +10,7 @@ const PetItem = ({ pet }) => {
             src={
               pet.images.length > 0 ? pet.images[0].image : defaultImage
             }
-            alt="Shoes"
+            alt="Pets"
             className="rounded-xl"
           />
         </figure>

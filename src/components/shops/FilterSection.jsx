@@ -91,7 +91,7 @@ const FilterSection = ({
           type="text"
           value={searchQuery}
           onChange={(e) => handleSearchQuery(e.target.value)}
-          placeholder="Search books..."
+          placeholder="Search pets..."
           className="w-full p-2 border rounded-md"
         />
       </div>

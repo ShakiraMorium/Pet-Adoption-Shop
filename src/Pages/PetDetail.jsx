@@ -42,23 +42,22 @@ const PetDetail = () => {
           }
         >
           <PetImageGallery
-            images={pet?.images}
+            images={pet?.images || []} 
             petName={pet.name}
           />
         </Suspense>
+
         <div className="flex flex-col">
           <div className="mb-4">
             <div className="badge badge-outline mb-2">
-              Category {pet.category}
+              Category {pet.category.name}
             </div>
-            <h1 className="text-3xl font-bold tracking-tight">
-              {pet.name}
-            </h1>
+            <h1 className="text-3xl font-bold tracking-tight">{pet.name}</h1>
           </div>
 
           <div className="mt-2 mb-6">
             <div className="flex items-baseline gap-2">
-              <span className="text-3xl font-bold">${pet.price}</span>
+              <span className="text-3xl font-bold">${pet.adoption_fee}</span>
               <span className="text-sm text-base-content/70">
                 (${pet.price_with_tax} incl. tax)
               </span>
@@ -72,13 +71,13 @@ const PetDetail = () => {
           <div className="mb-6">
             <div className="flex items-center">
               <div className="mr-2 text-sm font-medium">Availability:</div>
-              {pet.stock > 0 ? (
+              {pet.is_available > 0 ? (
                 <div className="badge badge-outline bg-success/10 text-success border-success/20">
-                  In Stock ({pet.stock} available)
+                  In Stock({pet.stock} available)
                 </div>
               ) : (
                 <div className="badge badge-outline bg-error/10 text-error border-error/20">
-                  Out of Stock
+                  Not Available
                 </div>
               )}
             </div>

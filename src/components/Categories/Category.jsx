@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import apiClient from "../../services/api-client";
 import CategoryItems from "./CategoryItems";
-import Cart from "../../Pages/Cart";
+// import Cart from "../../Pages/Cart";
 
 const Category = () => {
   const [categories, setCategories] = useState([]);
@@ -18,7 +18,7 @@ const Category = () => {
           href="#"
           className="btn btn-secondary px-6 py-6 rounded-full text-lg"
         >
-         <Cart></Cart>
+         
         </a>
       </div>
 

@@ -2,7 +2,7 @@ import { Route, Routes } from "react-router";
 import About from "../Pages/About/About.jsx";
 import MainLayout from "../Layouts/MainLayout";
 import Home from "../Pages/Home/Home.jsx";
-import Shop from "../Pages/Shop/ShopPage.jsx";
+import Shop from "../Pages/Shop.jsx";
 import Login from "../Pages/Login";
 import Register from "../Pages/Register";
 import Dashboard from "../Pages/Dashboard.jsx";
@@ -32,7 +32,7 @@ const AppRoutes = () => {
         {/* <Route path="category/:id" element={<Category />} />  */}
       </Route>
       {/* Private Routes  */}
-     <Route
+      <Route
         path="dashboard"
         element={
           <PrivateRoute>

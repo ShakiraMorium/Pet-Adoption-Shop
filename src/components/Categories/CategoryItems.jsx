@@ -1,5 +1,5 @@
 import { FaAngleRight } from "react-icons/fa6";
-import img5 from "../../assets/images/pets/img5.jpg";
+import img5 from "../../assets/images/pets/img8.jpg";
 const CategoryItems = ({ index, category }) => {
   const gradients = [
     "from-pink-100 to-blue-100",

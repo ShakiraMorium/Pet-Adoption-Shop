@@ -98,13 +98,13 @@ const Pet = () => {
     >
       <div className="py-12 px-4 max-w-7xl mx-auto">
         <div className="flex justify-between items-center px-4 md:px-8 mb-4">
-          <h2 className="text-3xl md:text-4xl font-bold">Trending Pets</h2>
-          <a
+          <h2 className="text-3xl md:text-4xl font-bold">All Pets</h2>
+          {/* <a
             href="#"
             className="btn btn-secondary px-6 py-6 rounded-full text-lg"
           >
             View All
-          </a>
+          </a> */}
         </div>
         {/* Spinner  */}
         {isLoading && (
