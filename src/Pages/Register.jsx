@@ -192,11 +192,11 @@ const Register = () => {
               )}
             </div>
 
-            <button type="submit" className="btn btn-primary w-full"></button>
+            <button type="submit" className="btn btn-primary w-full">SignUp</button>
           </form>
 
           <div className="text-center mt-4">
-            <p className="text-base-content/70">
+            <p className="text-sm text-base-content/70">
               Already have an account?{" "}
               <Link to="/login" className="link link-primary">
                 Sign in

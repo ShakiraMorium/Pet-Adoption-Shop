@@ -5,6 +5,7 @@ const CartSummary = ({ totalPrice, itemCount, cartId }) => {
   const tax = parseFloat(totalPrice) * 0.1;
   const orderTotal = parseFloat(totalPrice) + shipping + tax;
 
+  
   const deleteCart = () => {
     localStorage.removeItem("cartId");
   };

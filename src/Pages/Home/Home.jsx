@@ -8,7 +8,7 @@ import FAQSection from "../../components/FAQSection";
 
 const Home = () => {
   return (
-    <div>
+    <div className="bg-white">
       <HeroCarousel />
       <Features />
       <Pet />
