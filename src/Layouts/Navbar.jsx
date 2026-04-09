@@ -1,317 +1,199 @@
-import { NavLink } from "react-router";
-import { Link } from "react-router-dom";
+
+import { FaChevronDown, FaShoppingBag, FaUserCircle } from "react-icons/fa";
+import { Link, NavLink } from "react-router-dom";
+import useCartContext from "../hooks/useCartContext";
+import useAuthContext from "../hooks/useAuthContext";
+
+const navLinkClass = ({ isActive }) =>
+  `px-4 py-2 rounded-full text-sm font-semibold transition-colors ${
+    isActive ? "bg-pink-500 text-white" : "text-gray-200 hover:bg-white/10 hover:text-white"
+  }`;
 
 const Navbar = () => {
-  return (
-    <div className="border-2 border-b-2 border-red-600">
-      {/* <NavLink to="/" className={({ isActive }) => (isActive ? "text-red-500" : "text-black")}>
-        Home
-      </NavLink>
-      <NavLink to="/about" className={({ isActive }) => (isActive ? "text-red-500" : "text-black")}>
-        About
-      </NavLink>
-      <NavLink to="/products" className={({ isActive }) => (isActive ? "text-red-500" : "text-black")}>
-        Products
-      </NavLink> */}
 
-      <div className="navbar bg-black shadow-sm text-white border-red-600">
-        <div className="navbar-start ">
+    
+  const { cart } = useCartContext();
+  const { user, logoutUser } = useAuthContext();
+  const cartItems = cart?.items || [];
+  const cartCount = cartItems.reduce((total, item) => total + item.quantity, 0);
+  const cartSubtotal = cartItems.reduce((sum, item) => sum + Number(item.total_price || 0), 0);
+
+      
+  return (
+    <header className="sticky top-0 z-50 border-b border-pink-500/30 bg-black">
+      <div className="navbar max-w-7xl mx-auto px-3 sm:px-5">
+        <div className="navbar-start gap-2">
           <div className="dropdown">
-            <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                {" "}
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M4 6h16M4 12h8m-8 6h16"
-                />{" "}
+            
+              
+            <button tabIndex={0} type="button" className="btn btn-ghost text-white lg:hidden" aria-label="Open menu">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
               </svg>
-            </div>
-            <ul
-              tabIndex={0}
-              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
-            >
+            
+            
+            </button>
+            <ul tabIndex={0} className="menu menu-compact dropdown-content mt-3 z-[1] w-52 rounded-xl bg-white p-2 shadow-xl text-gray-700">
               <li>
-                <NavLink
-                  to="/"
-                  className={({ isActive }) =>
-                    isActive ? "text-red-500" : "text-black"
-                  }
-                >
+               
+                <NavLink to="/" className={({ isActive }) => (isActive ? "text-pink-600 font-semibold" : "text-gray-700")}>
                   Home
                 </NavLink>
               </li>
               <li>
                 <NavLink
                   to="/about"
-                  className={({ isActive }) =>
-                    isActive ? "text-red-500" : "text-black"
-                  }
+                  
+                  className={({ isActive }) => (isActive ? "text-pink-600 font-semibold" : "text-gray-700")}
                 >
                   About
                 </NavLink>
-                <ul className="p-2 text-black">
-                  <li>
-                    <Link to="/shop">Shop</Link>
-                  </li>
-                  <li>
-                    <Link to="/contact">Contact Us</Link>
-                  </li>
-                </ul>
+                
+              </li>
+              <li>
+                <NavLink to="/shop" className={({ isActive }) => (isActive ? "text-pink-600 font-semibold" : "text-gray-700")}>
+                  Shop
+                </NavLink>
               </li>
               <li>
                 <NavLink
                   to="/dashboard"
-                  className={({ isActive }) =>
-                    isActive ? "text-red-500" : "text-black"
-                  }
+                 
+                  className={({ isActive }) => (isActive ? "text-pink-600 font-semibold" : "text-gray-700")}
                 >
                   Dashboard
                 </NavLink>
               </li>
               <li>
                 <NavLink
-                  to="/logIn"
-                  className={({ isActive }) =>
-                    isActive ? "text-red-500" : "text-black"
-                  }
+                  
+                  
+                  to="/login"
+                  className={({ isActive }) => (isActive ? "text-pink-600 font-semibold" : "text-gray-700")}
                 >
-                  LogIn
+                  
+                  Login
                 </NavLink>
               </li>
             </ul>
           </div>
-          <div className="flex items-center justify-center ">
-            <img
-              className="ml-4 w-52"
-              src="/public/images/new-logo.png"
-              alt=""
-            />
-          </div>
+          
+
+
+          <Link to="/" className="flex items-center gap-2">
+            <img className="h-11 w-auto" src="/images/new-logo.png" alt="Pet Adoption Shop" />
+          </Link>
         </div>
+
         <div className="navbar-center hidden lg:flex">
-          <ul className="menu menu-horizontal px-1">
-            <li>
-              <NavLink
-                to="/"
-                className={({ isActive }) =>
-                  isActive ? "text-red-500" : "text-white"
-                }
-              >
-                Home
-              </NavLink>
-            </li>
-            <li>
-              <details>
-                <summary>
-                  <NavLink
-                    to="/about"
-                    className={({ isActive }) =>
-                      isActive ? "text-red-500" : "text-white"
-                    }
-                  >
-                    About
-                  </NavLink>
-                </summary>
-                <ul className="p-2 text-black">
-                  <li>
-                    <Link to="/shop">Shop</Link>
-                  </li>
-                  <li>
-                    <Link to="/contact">Contact Us</Link>
-                  </li>
-                </ul>
-              </details>
-            </li>
-            <li>
-              <NavLink
-                to="/dashboard"
-                className={({ isActive }) =>
-                  isActive ? "text-red-500" : "text-white"
-                }
-              >
-                Dashboard
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                to="/login"
-                className={({ isActive }) =>
-                  isActive ? "text-red-500" : "text-white"
-                }
-              >
-                LogIn
-              </NavLink>
-            </li>
-          </ul>
+         
+          <nav>
+            <ul className="flex items-center gap-1">
+              <li>
+                <NavLink to="/" className={navLinkClass}>
+                  Home
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/shop" className={navLinkClass}>
+                  Shop
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/about" className={navLinkClass}>
+                  About
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/dashboard" className={navLinkClass}>
+                  Dashboard
+                </NavLink>
+              </li>
+            </ul>
+          </nav>
         </div>
-        <div className="navbar-end ">
-          <div className="dropdown dropdown-end mr-6">
-            <div
-              tabIndex={0}
-              role="button"
-              className="btn btn-ghost btn-circle"
-            >
+       
+
+        <div className="navbar-end gap-2 sm:gap-3">
+          <div className="dropdown dropdown-end">
+            <button type="button" tabIndex={0} className="btn btn-ghost btn-circle text-white hover:bg-white/10" aria-label="Open cart">
               <div className="indicator">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-5 w-5"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  {" "}
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
-                  />{" "}
-                </svg>
-                <span className="badge badge-sm indicator-item">8</span>
+                
+                <FaShoppingBag size={18} />
+                <span className="badge badge-sm indicator-item border-none bg-pink-500 text-white">{cartCount}</span>
               </div>
-            </div>
-            <div
-              tabIndex={0}
-              className="card card-compact dropdown-content bg-base-100 z-1 mt-3 w-52 shadow"
-            >
+           
+            
+            </button>
+            <div className="card card-compact dropdown-content mt-3 z-[1] w-80 bg-white shadow-xl text-gray-700">
               <div className="card-body">
-                <span className="text-lg font-bold">8 Items</span>
-                <span className="text-info">Subtotal: $999</span>
+                
+                <span className="text-lg font-bold">{cartCount} item(s)</span>
+                <span className="text-sm">Subtotal: ${cartSubtotal.toFixed(2)}</span>
+                <div className="max-h-40 overflow-auto rounded-lg bg-gray-50 p-2 space-y-2">
+                  {cartItems.length === 0 ? (
+                    <p className="text-sm text-gray-500">Your cart is empty.</p>
+                  ) : (
+                    cartItems.slice(0, 3).map((item) => (
+                      <div key={item.id} className="flex items-center justify-between text-sm">
+                        <span className="truncate pr-2">{item.pet?.name}</span>
+                        <span>x{item.quantity}</span>
+                      </div>
+                    ))
+                  )}
+                </div>
                 <div className="card-actions">
-                  <button className="btn btn-primary btn-block">
-                    View cart
-                  </button>
+                  
+                  <Link to="/dashboard/cart" className="btn btn-primary btn-block">
+                    View Cart Details
+                  </Link>
                 </div>
               </div>
             </div>
           </div>
-          <div className="dropdown dropdown-end mr-8">
-            <div
-              tabIndex={0}
-              role="button"
-              className="btn btn-ghost btn-circle avatar"
-            >
-              <div className="w-10 rounded-full ">
-                <img
-                  alt="Tailwind CSS Navbar component"
-                  src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
-                />
-              </div>
-            </div>
-            <ul
-              tabIndex={0}
-              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow text-black"
-            >
+         
+             
+
+          <details className="dropdown dropdown-end">
+            <summary className="btn btn-ghost text-white hover:bg-white/10 rounded-full px-3 normal-case border border-white/15 list-none">
+              <FaUserCircle size={18} />
+              <span className="hidden sm:inline">Account</span>
+              <FaChevronDown className="opacity-70" size={12} />
+            </summary>
+            <ul className="menu menu-sm dropdown-content mt-3 z-[1] w-44 rounded-xl bg-white p-2 shadow-xl text-gray-700">
               <li>
-                <a className="justify-between">
-                  Profile<span className="badge">New</span>
-                </a>
+                
+              
+                <Link to="/dashboard">Profile</Link>
               </li>
               <li>
-                <a>Settings</a>
+                
+                <Link to="/dashboard">Settings</Link>
               </li>
               <li>
-                <a>Logout</a>
+                
+                <button type="button" onClick={logoutUser} className="text-left">
+                  Logout
+                </button>
               </li>
             </ul>
-          </div>
+         
+          </details>
+
+          {user ? (
+            <NavLink to="/dashboard" className="btn btn-sm rounded-full border-none bg-pink-500 text-white hover:bg-pink-600">
+              Dashboard
+            </NavLink>
+          ) : (
+            <NavLink to="/login" className="btn btn-sm rounded-full border-none bg-pink-500 text-white hover:bg-pink-600">
+              Login
+            </NavLink>
+          )}
         </div>
       </div>
-    </div>
+    
+    </header>
   );
 };
 
 export default Navbar;
-
-// new navbar
-
-// import { Link } from "react-router-dom";
-// import { FaBars, FaShoppingCart } from "react-icons/fa";
-// // import Button from "./Button"; // ✅ import your button component
-
-// const Navbar = () => {
-//   return (
-//     <div className="navbar bg-black text-white px-4 md:px-8">
-//       {/* Navbar Start */}
-//       <div className="navbar-start">
-//         {/* Mobile Menu Button */}
-//         <div className="dropdown">
-//           <label tabIndex={0} className="btn btn-ghost lg:hidden">
-//             <FaBars size={20} />
-//           </label>
-//           <ul
-//             tabIndex={0}
-//             className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-black rounded-box w-52"
-//           >
-//             <li><Link to="/">Home</Link></li>
-//             <li><Link to="/products">Products</Link></li>
-//             <li><Link to="/about">About</Link></li>
-//             <li><Link to="/contact">Contact</Link></li>
-//             {/* 👇 Mobile view buttons */}
-//             <li className="mt-2">
-//               <Button />
-//             </li>
-//           </ul>
-//         </div>
-
-//         {/* Logo */}
-//         <Link to="/" className="btn btn-ghost normal-case text-xl">
-//           Pet Shop
-//         </Link>
-//       </div>
-
-//       {/* Navbar Center (visible on large screens only) */}
-//       <div className="navbar-center hidden lg:flex">
-//         <ul className="menu menu-horizontal px-1">
-//           <li><Link to="/">Home</Link></li>
-//           <li><Link to="/products">Products</Link></li>
-//           <li><Link to="/about">About</Link></li>
-//           <li><Link to="/contact">Contact</Link></li>
-//         </ul>
-//       </div>
-
-//       {/* Navbar End */}
-//       <div className="navbar-end flex items-center gap-4">
-//         {/* Cart Icon */}
-//         <button className="relative">
-//           <FaShoppingCart size={22} />
-//           <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs px-1 rounded-full">
-//             3
-//           </span>
-//         </button>
-
-//         {/* Avatar */}
-//         <div className="dropdown dropdown-end">
-//           <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
-//             <div className="w-8 rounded-full">
-//               <img src="https://i.pravatar.cc/40" alt="User" />
-//             </div>
-//           </label>
-//           <ul
-//             tabIndex={0}
-//             className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-black rounded-box w-52"
-//           >
-//             <li><Link to="/profile">Profile</Link></li>
-//             <li><Link to="/settings">Settings</Link></li>
-//             <li><Link to="/logout">Logout</Link></li>
-//           </ul>
-//         </div>
-
-//         {/* ✅ Your Buttons (desktop) */}
-//         <div className="hidden lg:flex">
-//           <Button />
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default Navbar;

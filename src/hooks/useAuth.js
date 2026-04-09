@@ -4,6 +4,7 @@ import apiClient from "../services/api-client";
 const useAuth = () => {
   const [user, setUser] = useState(null);
   const [errorMsg, setErrorMsg] = useState("");
+  const [authLoading, setAuthLoading] = useState(true);
 
   const getToken = () => {
     const token = localStorage.getItem("authTokens");
@@ -12,9 +13,7 @@ const useAuth = () => {
 
   const [authTokens, setAuthTokens] = useState(getToken());
 
-  useEffect(() => {
-    if (authTokens) fetchUserProfile();
-  }, [authTokens]);
+ 
 
   const handleAPIError = (
     error,
@@ -35,16 +34,39 @@ const useAuth = () => {
   };
 
   // Fetch user Profile
-  const fetchUserProfile = async () => {
+ const fetchUserProfile = async (token = authTokens?.access) => {
+    if (!token) {
+      setUser(null);
+      return null;
+    }
     try {
-      const response = await apiClient.get("/auth/users/me", {
-        headers: { Authorization: `JWT ${authTokens?.access}` },
+      const response = await apiClient.get("/auth/users/me/", {
+        headers: { Authorization: `JWT ${token}` },
       });
       setUser(response.data);
+      return response.data;
     } catch (error) {
-      console.log("Error Fetching user", error);
+      console.log("Error fetching user", error);
+      setUser(null);
+      return null;
     }
   };
+
+   useEffect(() => {
+    const bootstrapAuth = async () => {
+      setAuthLoading(true);
+      if (!authTokens?.access) {
+        setUser(null);
+        setAuthLoading(false);
+        return;
+      }
+
+      await fetchUserProfile(authTokens.access);
+      setAuthLoading(false);
+    };
+
+    bootstrapAuth();
+  }, [authTokens]);
 
   // Update User Profile
   const updateUserProfile = async (data) => {
@@ -79,14 +101,17 @@ const useAuth = () => {
     setErrorMsg("");
     try {
       const response = await apiClient.post("/auth/jwt/create/", userData);
-      setAuthTokens(response.data);
-      localStorage.setItem("authTokens", JSON.stringify(response.data));
+      const tokens = response.data;
+
+      setAuthTokens(tokens);
+      localStorage.setItem("authTokens", JSON.stringify(tokens));
+      await fetchUserProfile(tokens.access);
 
       // After login set user
-      await fetchUserProfile();
+      
       return { success: true };
     } catch (error) {
-      setErrorMsg(error.response.data?.detail);
+      setErrorMsg(error.response?.data?.detail || "Login failed.");
       return { success: false };
     }
   };
@@ -110,6 +135,7 @@ const useAuth = () => {
   const logoutUser = () => {
     setAuthTokens(null);
     setUser(null);
+    setAuthLoading(false);
     localStorage.removeItem("authTokens");
     localStorage.removeItem("cartId");
   };
@@ -117,6 +143,7 @@ const useAuth = () => {
   return {
     user,
     errorMsg,
+    authLoading,
     loginUser,
     registerUser,
     logoutUser,

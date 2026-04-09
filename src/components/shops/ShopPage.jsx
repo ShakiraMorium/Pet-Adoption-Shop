@@ -12,7 +12,7 @@ const ShopPage = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [sortOrder, setSortOrder] = useState("");
 
-  const { pets, loading, totalPages } = useFetchPet(
+  const { pets, loading, totalPages, error } = useFetchPet(
     currentPage,
     priceRange,
     selectedCategory,
@@ -20,7 +20,7 @@ const ShopPage = () => {
     sortOrder
   );
 
-  const categories = useFetchCategories();
+  const { categories } = useFetchCategories();
 
   const handlePriceChange = (index, value) => {
     setPriceRange((prev) => {
@@ -45,7 +45,7 @@ const ShopPage = () => {
         sortOrder={sortOrder}
         handleSorting={setSortOrder}
       />
-      <PetList pets={pets} loading={loading} />
+      <PetList pets={pets} loading={loading} error={error} />
       <Pagination
         totalPages={totalPages}
         currentPage={currentPage}
