@@ -1,82 +1,62 @@
-const getOrderId = (order, index) => order?.id || order?.order_id || `ORD-${index + 1}`;
-const getCustomer = (order) =>
-  order?.customer_name || order?.customer?.name || order?.user?.username || "N/A";
-const getStatus = (order) => order?.status || "Pending";
-const getDate = (order) => {
-  const value = order?.created_at || order?.created || order?.createdAt || order?.date;
-  if (!value) return "—";
-  const parsed = new Date(value);
-  if (Number.isNaN(parsed.getTime())) return "—";
-  return parsed.toLocaleDateString("en-US", {
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-  });
-};
-const getAmount = (order) =>
-  Number(order?.total_price ?? order?.total ?? order?.amount ?? 0) || 0;
-
-const statusClasses = {
-  completed: "bg-emerald-100 text-emerald-700",
-  processing: "bg-amber-100 text-amber-700",
-  shipped: "bg-sky-100 text-sky-700",
-  pending: "bg-slate-100 text-slate-700",
-};
-  const Order = ({ orders = [] }) => {
+const Order = () => {
+  
   return (
-     <section className="rounded-2xl border border-slate-200 bg-white shadow-sm">
-      <div className="border-b border-slate-100 px-5 py-4">
-        <h3 className="text-lg font-semibold text-slate-800">Recent Orders</h3>
-      </div>
-
-      <div className="overflow-x-auto">
-        <table className="min-w-full divide-y divide-slate-200 text-sm">
-          <thead className="bg-slate-50">
-            <tr>
-              <th className="px-5 py-3 text-left font-semibold text-slate-600">Order ID</th>
-              <th className="px-5 py-3 text-left font-semibold text-slate-600">Customer</th>
-              <th className="px-5 py-3 text-left font-semibold text-slate-600">Status</th>
-              <th className="px-5 py-3 text-left font-semibold text-slate-600">Date</th>
-              <th className="px-5 py-3 text-right font-semibold text-slate-600">Amount</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-slate-100 bg-white">
-            {orders.length === 0 ? (
+    <div className="mt-6 card bg-base-100 shadow-sm">
+      <div className="card-body">
+        <h3 className="card-title text-lg">Recent Orders</h3>
+        <div className="overflow-x-auto">
+          <table className="table table-zebra">
+            <thead>
               <tr>
-
-
-                <td className="px-5 py-6 text-slate-500" colSpan={5}>
-              
-                </td>
-                
+                <th>Order ID</th>
+                <th>Customer</th>
+                <th>Status</th>
+                <th>Date</th>
+                <th>Amount</th>
               </tr>
-            
-          
-            ) : (
-              orders.map((order, index) => (
-                <tr key={getOrderId(order, index)}>
-                  <td className="px-5 py-3 text-slate-700">{getOrderId(order, index)}</td>
-                  <td className="px-5 py-3 text-slate-700">{getCustomer(order)}</td>
-                  <td className="px-5 py-3">
-                    <div className={`badge ${statusClasses[getStatus(order)]}`}>
-                      {getStatus(order)}
-                    </div>
-                  </td>
-                  <td className="px-5 py-3 text-slate-700">{getDate(order)}</td>
-                  <td className="px-5 py-3 text-right font-semibold text-slate-900">
-                    {new Intl.NumberFormat("en-US", {
-                      style: "currency",
-                      currency: "USD",
-                    }).format(getAmount(order))}
-                  </td>
-                </tr>
-              ))
-            )}
-          </tbody>
-        </table>
-
+            </thead>
+            <tbody>
+              <tr>
+                <td>#ORD-7245</td>
+                <td>John Smith</td>
+                <td>
+                  <div className="badge badge-success">Completed</div>
+                </td>
+                <td>Mar 8, 2025</td>
+                <td>$125.00</td>
+              </tr>
+              <tr>
+                <td>#ORD-7244</td>
+                <td>Sarah Johnson</td>
+                <td>
+                  <div className="badge badge-warning">Processing</div>
+                </td>
+                <td>Mar 7, 2025</td>
+                <td>$89.99</td>
+              </tr>
+              <tr>
+                <td>#ORD-7243</td>
+                <td>Michael Brown</td>
+                <td>
+                  <div className="badge badge-info">Shipped</div>
+                </td>
+                <td>Mar 7, 2025</td>
+                <td>$245.50</td>
+              </tr>
+              <tr>
+                <td>#ORD-7242</td>
+                <td>Emily Davis</td>
+                <td>
+                  <div className="badge badge-success">Completed</div>
+                </td>
+                <td>Mar 6, 2025</td>
+                <td>$112.75</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
-  </section>
+    </div>
   );
 };
 

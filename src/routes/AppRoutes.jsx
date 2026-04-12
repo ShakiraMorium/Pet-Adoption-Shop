@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router";
+import { Navigate,Route, Routes } from "react-router";
 import About from "../Pages/About/About.jsx";
 import MainLayout from "../Layouts/MainLayout";
 import Home from "../Pages/Home/Home.jsx";
